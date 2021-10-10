@@ -5,7 +5,7 @@ node () {
 
  wrap([$class: 'Xvfb']) {
 	stage ('MQTest.job - Checkout') {
- 	 checkout([$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'jenkins', url: 'https://github.com/preethiram4/mqtest.git']]]) 
+ 	 checkout([$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'Jenkins', url: 'https://github.com/preethiram4/mqtest.git']]]) 
 	}
 	stage ('MQTest.job - Build') {
 sh label: '', script: '''#!/bin/bash
@@ -16,7 +16,7 @@ zip ${AppName}_{$BUILD_NUMBER}.zip ${AppName}_${BUILD_NUMBER}.bar
 zip /home/zilker/appdata/bar/${AppName}_${BUILD_NUMBER}.zip ${AppName}_${BUILD_NUMBER}.bar
 chmod 777 /home/zilker/appdata/bar/${AppName}_${BUILD_NUMBER}.zip '''
 }
-sshagent (credentials: ['jenkins']) {
+sshagent (credentials: ['Jenkins']) {
     sh("git tag -a ${JOB_NAME}_${BUILD_NUMBER} -m 'Tagged by Jenkins build'")
     sh('git push git@github.com:preethiram4/MQTest.git --tags')
 }
