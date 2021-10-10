@@ -14,7 +14,7 @@ source /opt/IBM/ace-11.0.0.11/server/bin/mqsiprofile
 echo "Application Name " $AppName ${AppName}_{$BUILD_NUMBER}
 zip ${AppName}_{$BUILD_NUMBER}.zip ${AppName}_${BUILD_NUMBER}.bar
 zip /home/zilker/appdata/bar/${AppName}_${BUILD_NUMBER}.zip ${AppName}_${BUILD_NUMBER}.bar
-chmod 777 /home/zilker/appdata/bar/${AppName}_${BUILD_NUMBER}.zip
+chmod 777 /home/zilker/appdata/bar/${AppName}_${BUILD_NUMBER}.zip '''
 }
 sshagent (credentials: ['jenkins']) {
     sh("git tag -a ${JOB_NAME}_${BUILD_NUMBER} -m 'Tagged by Jenkins build'")
