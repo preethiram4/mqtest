@@ -4,10 +4,10 @@ timestamps {
 node () {
 
  wrap([$class: 'Xvfb']) {
-	stage ('MQTest.job - Checkout') {
+	stage ('Application - Checkout') {
  	 checkout([$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'jenkins', url: 'https://github.com/preethiram4/mqtest.git']]]) 
 	}
-	stage ('MQTest.job - Build') {
+	stage ('Application - Build Process') {
 sh label: '', script: '''#!/bin/bash
 source /opt/IBM/ace-11.0.0.11/server/bin/mqsiprofile
 /opt/IBM/ace-11.0.0.11/tools/mqsicreatebar -data . -b ${AppName}_${BUILD_NUMBER}.bar -a $AppName
