@@ -9,9 +9,9 @@ node () {
 	stage ('Application - Build Process') {
 sh label: '', script: '''#!/bin/bash
 source /opt/IBM/ace-11.0.0.11/server/bin/mqsiprofile
-oc login ${OCP_API_URL} -u ${OCP_USER} -p ${OCP_PASSWORD} --insecure-skip-tls-verify
+oc login --token=sha256~Sfi-LI_xo_VLLWhpDo0KAQYdnkPUOYpcVa88EU7Biz0 --server=https://api.ocp.cp4i.zint.cloud:6443
 #cloudctl login -a ${ICP_CONSOLE_URL} -n ${Namespace} -u ${CP4I_User} -p ${CP4I_Password} –-skip-ssl-validation
-oc project ${Namespace}
+oc project cp4i-ace-dsh-01
 oc apply -f /home/zilker/appdata/YAML/test.yaml '''
 }
 
