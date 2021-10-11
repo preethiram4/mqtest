@@ -6,12 +6,14 @@ node () {
 	stage ('Application - Checkout') {
  	 checkout([$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'jenkins', url: 'https://github.com/preethiram4/mqtest.git']]]) 
 	}
-	stage ('Application - Build Process') {
+	stage ('OC Login') {
 sh label: '', script: '''#!/bin/bash
 source /opt/IBM/ace-11.0.0.11/server/bin/mqsiprofile
 oc login --token=${OCP_APIToken} --server=https://api.ocp.cp4i.zint.cloud:6443 --insecure-skip-tls-verify
 #cloudctl login -a ${ICP_CONSOLE_URL} -n ${Namespace} -u ${CP4I_User} -p ${CP4I_Password} –-skip-ssl-validation
-oc project cp4i-ace-dsh-01
+oc project cp4i-ace-dsh-01 '''
+}
+stage ('Create - Integration Server YAML') {
 rm /home/zilker/appdata/YAML/test1.yaml
 cat <<EOT >> /home/zilker/appdata/YAML/test1.yaml
 apiVersion: appconnect.ibm.com/v1beta1
@@ -48,7 +50,9 @@ spec:
   replicas: 1
 EOT
 chmod 777 /home/zilker/appdata/YAML/test1.yaml
-oc apply -f /home/zilker/appdata/YAML/test1.yaml '''
+}
+stage ('Create Server') {
+oc apply -f /home/zilker/appdata/YAML/test1.yaml
 }
 
 }
