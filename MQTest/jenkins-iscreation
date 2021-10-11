@@ -53,7 +53,8 @@ EOT
 chmod 777 /home/zilker/appdata/YAML/test1.yaml '''
 }
 stage ('Create Server') {
-oc apply -f /home/zilker/appdata/YAML/test1.yaml
+sh label: '', script: '''#!/bin/bash
+oc apply -f /home/zilker/appdata/YAML/test1.yaml '''
 }
 
 }
