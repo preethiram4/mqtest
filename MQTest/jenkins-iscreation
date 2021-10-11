@@ -14,6 +14,7 @@ oc login --token=${OCP_APIToken} --server=https://api.ocp.cp4i.zint.cloud:6443 -
 oc project cp4i-ace-dsh-01 '''
 }
 stage ('Create - Integration Server YAML') {
+sh label: '', script: '''#!/bin/bash
 rm /home/zilker/appdata/YAML/test1.yaml
 cat <<EOT >> /home/zilker/appdata/YAML/test1.yaml
 apiVersion: appconnect.ibm.com/v1beta1
@@ -49,7 +50,7 @@ spec:
   version: 11.0.0.13-r2-eus
   replicas: 1
 EOT
-chmod 777 /home/zilker/appdata/YAML/test1.yaml
+chmod 777 /home/zilker/appdata/YAML/test1.yaml '''
 }
 stage ('Create Server') {
 oc apply -f /home/zilker/appdata/YAML/test1.yaml
