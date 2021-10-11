@@ -1,0 +1,21 @@
+timestamps {
+
+node () {
+
+ wrap([$class: 'Xvfb']) {
+	stage ('Application - Checkout') {
+ 	 checkout([$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'jenkins', url: 'https://github.com/preethiram4/mqtest.git']]]) 
+	}
+	stage ('Application - Build Process') {
+sh label: '', script: '''#!/bin/bash
+source /opt/IBM/ace-11.0.0.11/server/bin/mqsiprofile
+oc login ${OCP_API_URL} -u ${OCP_USER} -p ${OCP_PASSWORD} --insecure-skip-tls-verify
+#cloudctl login -a ${ICP_CONSOLE_URL} -n ${Namespace} -u ${CP4I_User} -p ${CP4I_Password} –-skip-ssl-validation
+oc project ${Namespace}
+oc apply -f /home/zilker/appdata/YAML/test.yaml
+}
+
+}
+cleanWs()
+}
+}
