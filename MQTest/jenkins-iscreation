@@ -12,11 +12,12 @@ source /opt/IBM/ace-11.0.0.11/server/bin/mqsiprofile
 oc login --token=${OCP_APIToken} --server=https://api.ocp.cp4i.zint.cloud:6443 --insecure-skip-tls-verify
 #cloudctl login -a ${ICP_CONSOLE_URL} -n ${Namespace} -u ${CP4I_User} -p ${CP4I_Password} –-skip-ssl-validation
 oc project cp4i-ace-dsh-01
+rm /home/zilker/appdata/YAML/test1.yaml
 cat <<EOT >> /home/zilker/appdata/YAML/test1.yaml
 apiVersion: appconnect.ibm.com/v1beta1
 kind: IntegrationServer
 metadata:
-  name: test-image-03
+  name: ${IntegrationserverName}
   namespace: cp4i-ace-dsh-01
 spec:
   license:
