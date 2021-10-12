@@ -48,7 +48,7 @@ spec:
   service:
     endpointType: http
   version: 11.0.0.13-r2-eus
-  replicas: 1
+  replicas: 3
 EOT
 chmod 777 /home/zilker/appdata/YAML/test1.yaml '''
 }
