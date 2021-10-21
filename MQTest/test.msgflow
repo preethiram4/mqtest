@@ -6,7 +6,7 @@
     <colorGraphic16 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/MQTest/icons/full/obj16/test.gif"/>
     <colorGraphic32 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/MQTest/icons/full/obj30/test.gif"/>
     <composition>
-      <nodes xmi:type="ComIbmMQInput.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_1" location="136,98" queueName="IN" connection="CLIENT" destinationQueueManagerName="cp4itst01" queueManagerHostname="cp4itst01-ibm-mq.cp4i-mq.svc" listenerPortNumber="1414" channelName="TST01.SVRCONN.NSEC">
+      <nodes xmi:type="ComIbmMQInput.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_1" location="136,98" queueName="IN" connection="CLIENT" destinationQueueManagerName="cp4itst01" queueManagerHostname="cp4itst01-ibm-mq.cp4i-mq.svc" listenerPortNumber="1414" channelName="TST01.SVRCONN.NSEC" orderMode="userDefined">
         <translation xmi:type="utility:ConstantString" string="MQ Input"/>
       </nodes>
       <nodes xmi:type="ComIbmMQOutput.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_2" location="417,107" queueName="OUT" connection="CLIENT" destinationQueueManagerName="cp4itst01" queueManagerHostname="cp4itst01-ibm-mq.cp4i-mq.svc" listenerPortNumber="1414" channelName="TST01.SVRCONN.NSEC">
