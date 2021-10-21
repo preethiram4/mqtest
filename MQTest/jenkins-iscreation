@@ -1,0 +1,63 @@
+timestamps {
+
+node () {
+
+ wrap([$class: 'Xvfb']) {
+	stage ('Application - Checkout') {
+ 	 checkout([$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'jenkins', url: 'https://github.com/preethiram4/mqtest.git']]]) 
+	}
+	stage ('OC Login') {
+sh label: '', script: '''#!/bin/bash
+source /opt/IBM/ace-11.0.0.11/server/bin/mqsiprofile
+oc login --token=${OCP_APIToken} --server=https://api.ocp.cp4i.zint.cloud:6443 --insecure-skip-tls-verify
+#cloudctl login -a ${ICP_CONSOLE_URL} -n ${Namespace} -u ${CP4I_User} -p ${CP4I_Password} –-skip-ssl-validation
+oc project cp4i-ace-dsh-01 '''
+}
+stage ('Create - Integration Server YAML') {
+sh label: '', script: '''#!/bin/bash
+rm /home/zilker/appdata/YAML/test1.yaml
+cat <<EOT >> /home/zilker/appdata/YAML/test1.yaml
+apiVersion: appconnect.ibm.com/v1beta1
+kind: IntegrationServer
+metadata:
+  name: ${IntegrationserverName}
+  namespace: cp4i-ace-dsh-01
+spec:
+  license:
+    accept: true
+    license: L-APEH-C2XD8J
+    use: CloudPakForIntegrationProduction
+  pod:
+    containers:
+      runtime:
+        image: >-
+          image-registry.openshift-image-registry.svc:5000/cp4i-ace-dsh-01/log4j-icr-01:1.0
+        imagePullPolicy: Always
+        resources:
+          limits:
+            cpu: 300m
+            memory: 300Mi
+          requests:
+            cpu: 300m
+            memory: 300Mi
+  adminServerSecure: true
+  router:
+    timeout: 120s
+  useCommonServices: true
+  designerFlowsOperationMode: disabled
+  service:
+    endpointType: http
+  version: 11.0.0.13-r2-eus
+  replicas: 3
+EOT
+chmod 777 /home/zilker/appdata/YAML/test1.yaml '''
+}
+stage ('Create Server') {
+sh label: '', script: '''#!/bin/bash
+oc apply -f /home/zilker/appdata/YAML/test1.yaml '''
+}
+
+}
+cleanWs()
+}
+}
