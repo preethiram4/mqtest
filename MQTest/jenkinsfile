@@ -10,7 +10,8 @@ node () {
 	stage ('Application - Build Process') {
 sh label: '', script: '''#!/bin/bash
 source /opt/IBM/ace-11.0.0.11/server/bin/mqsiprofile
-/opt/IBM/ace-11.0.0.11/tools/mqsicreatebar -data . -b ${AppName}_${BUILD_NUMBER}.bar -a $AppName
+/opt/IBM/ace-11.0.0.11/tools/mqsicreatebar -data . -b ${AppName}.bar -a $AppName
+mqsiapplybaroverride -b ${AppName}.bar -p ${AppName}/BarOverrides/${AppName}_{Environment}.properties -o ${AppName}_${BUILD_NUMBER}.bar -r
 echo "Application Name " $AppName ${AppName}_{$BUILD_NUMBER}
 zip ${AppName}_{$BUILD_NUMBER}.zip ${AppName}_${BUILD_NUMBER}.bar
 zip /home/zilker/appdata/bar/${AppName}_${BUILD_NUMBER}.zip ${AppName}_${BUILD_NUMBER}.bar
