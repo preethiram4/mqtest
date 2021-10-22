@@ -25,6 +25,20 @@ zip ${AppName}_{$BUILD_NUMBER}.zip ${AppName}_${BUILD_NUMBER}.bar
 zip /home/zilker/appdata/bar/${AppName}_${BUILD_NUMBER}.zip ${AppName}_${BUILD_NUMBER}.bar
 chmod 777 /home/zilker/appdata/bar/${AppName}_${BUILD_NUMBER}.zip '''
 }
+stage('Git Push'){
+    steps{
+        script{
+            GIT_CREDS = credentials('jenkins')
+            sh '''
+                git add .
+                git commit -m "push to git"
+                git push https://github.com/preethiram4/mqtest.git main
+            '''
+        }
+    }
+}
+
+
 }
 cleanWs()
 }
