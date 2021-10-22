@@ -27,15 +27,8 @@ chmod 777 /home/zilker/appdata/bar/${AppName}_${BUILD_NUMBER}.zip '''
 }
 stage('Update GIT') {
   
-    script {
-      catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-        
-            sh "git config user.email preethiram4@gmail.com"
-            sh "git config user.name preethiram4"
-			sh "git clone git@github.com:preethiram4/mqtest.git"
-			sh "git add . "
-            sh "git commit -m 'Triggered Build: ${env.BUILD_NUMBER}'"
-			sh "git push --set-upstream origin HEAD:main"
+    sh "git commit -am 'Bumped version number'"
+	gitPublisher branchesToPush: [[branchName: '*/main']], credentialsId: 'Jenkins-GitHub', url: 'https://github.com/preethiram4/mqtest.git'
             
         
       }
