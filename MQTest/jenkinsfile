@@ -25,14 +25,22 @@ zip ${AppName}_{$BUILD_NUMBER}.zip ${AppName}_${BUILD_NUMBER}.bar
 zip /home/zilker/appdata/bar/${AppName}_${BUILD_NUMBER}.zip ${AppName}_${BUILD_NUMBER}.bar
 chmod 777 /home/zilker/appdata/bar/${AppName}_${BUILD_NUMBER}.zip '''
 }
-stage('Git Push'){
-sh label: '', script: '''#!/bin/bash
-            GIT_CREDS = credentials('jenkins')
-                git add .
-                git commit -m "push to git"
-                git push https://github.com/preethiram4/mqtest.git main
-            '''
+stage('Update GIT') {
+  steps {
+    script {
+      catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+        withCredentials([usernamePassword(credentialsId: 'jenkins', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+            def encodedPassword = URLEncoder.encode("$GIT_PASSWORD",'UTF-8')
+            sh "git config user.email preethiram4@gmail.com"
+            sh "git config user.name preethiram4"
+            sh "git add ."
+            sh "git commit -m 'Triggered Build: ${env.BUILD_NUMBER}'"
+            sh "git push https://${GIT_USERNAME}:${encodedPassword}@github.com/${GIT_USERNAME}/mqtest.git"
         }
+      }
+    }
+  }
+}
     
 
 
