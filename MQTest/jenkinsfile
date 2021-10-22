@@ -26,7 +26,7 @@ zip /home/zilker/appdata/bar/${AppName}_${BUILD_NUMBER}.zip ${AppName}_${BUILD_N
 chmod 777 /home/zilker/appdata/bar/${AppName}_${BUILD_NUMBER}.zip '''
 }
 stage('Update GIT') {
-  steps {
+  
     script {
       catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
         withCredentials([usernamePassword(credentialsId: 'jenkins', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
@@ -39,7 +39,7 @@ stage('Update GIT') {
         }
       }
     }
-  }
+  
 }
     
 
