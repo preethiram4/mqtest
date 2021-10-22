@@ -5,7 +5,7 @@ node () {
 
  wrap([$class: 'Xvfb']) {
 	stage ('Application - Checkout') {
- 	 checkout([$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'Jenkins-GitHub', url: 'https://github.com/preethiram4/mqtest.git']]]) 
+ 	 checkout([$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'jenkins-test1', url: 'https://github.com/preethiram4/mqtest.git']]]) 
 	}
 	stage ('Application - Build Process') {
 sh label: '', script: '''#!/bin/bash
