@@ -29,7 +29,7 @@ stage('Update GIT') {
   
     script {
       catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-        withCredentials([usernamePassword(credentialsId: 'Jenkins-GitHub', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+        withCredentials([usernamePassword(credentialsId: '61c81f80-8151-4899-aecd-80d576412f2e', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
             def encodedPassword = URLEncoder.encode("$GIT_PASSWORD",'UTF-8')
             sh "git config user.email preethiram4@gmail.com"
             sh "git config user.name preethiram4"
