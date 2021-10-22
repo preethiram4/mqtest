@@ -35,7 +35,7 @@ stage('Update GIT') {
             sh "git config user.name preethiram4"
             sh "git add ."
             sh "git commit -m 'Triggered Build: ${env.BUILD_NUMBER}'"
-            sh "git push https://${GIT_USERNAME}:${encodedPassword}@github.com/${GIT_USERNAME}/mqtest.git"
+            sh "git push https://${GIT_USERNAME}:${encodedPassword}@github.com/${GIT_USERNAME}/mqtest.git main"
         }
       }
     }
