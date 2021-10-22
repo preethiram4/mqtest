@@ -33,8 +33,7 @@ stage('Update GIT') {
             def encodedPassword = URLEncoder.encode("$GIT_PASSWORD",'UTF-8')
             sh "git config user.email preethiram4@gmail.com"
             sh "git config user.name preethiram4"
-			
-			sh "git remote set-url origin https://github.com/preethiram4/mqtest.git"
+			sh "git clone git@github.com:preethiram4/mqtest.git"
 			sh "git add . "
             sh "git commit -m 'Triggered Build: ${env.BUILD_NUMBER}'"
 			sh "git push --set-upstream origin HEAD:main"
