@@ -26,7 +26,7 @@ zip /home/zilker/appdata/bar/${AppName}_${BUILD_NUMBER}.zip ${AppName}_${BUILD_N
 chmod 777 /home/zilker/appdata/bar/${AppName}_${BUILD_NUMBER}.zip '''
 }
 stage('Update GIT') {
-  
+    sh "git add ."
     sh "git commit -am 'Bumped version number'"
 	gitPublisher branchesToPush: [[branchName: '*/main']], credentialsId: 'Jenkins-GitHub', url: 'https://github.com/preethiram4/mqtest.git'
             
