@@ -54,7 +54,12 @@ chmod 777 /home/zilker/appdata/YAML/test1.yaml '''
 }
 stage ('Create Server') {
 sh label: '', script: '''#!/bin/bash
-oc apply -f /home/zilker/appdata/YAML/test1.yaml '''
+if [ ${ISStatus} = 'NEW' ]
+then
+oc apply -f /home/zilker/appdata/YAML/test1.yaml 
+else
+oc replace -f /home/zilker/appdata/YAML/test1.yaml
+fi'''
 }
 
 }
