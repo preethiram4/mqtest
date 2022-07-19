@@ -13,7 +13,8 @@ source /opt/IBM/ace-12/server/bin/mqsiprofile
 }
 stage ('Application - Apply Bar Override') {
 sh label: '', script: '''#!/bin/bash
- ./opt/IBM/ace-12/ace accept license silently
+cd /opt/IBM/ace-12
+ ./ace accept license silently
 source /opt/IBM/ace-12/server/bin/mqsiprofile
 echo "Application Name " $AppName ${AppName}_${Environment}
 /opt/IBM/ace-12/server/bin/mqsiapplybaroverride -b ${AppName}.bar -p ${AppName}/BarOverrides/${AppName}_${Environment}.properties -o ${AppName}_${BUILD_NUMBER}.bar -r'''
