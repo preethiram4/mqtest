@@ -15,7 +15,7 @@ stage ('Application - Apply Bar Override') {
 sh label: '', script: '''#!/bin/bash
 source /opt/IBM/ace-12/server/bin/mqsiprofile
 echo "Application Name " $AppName ${AppName}_${Environment}
-mqsiapplybaroverride -b ${AppName}.bar -p ${AppName}/BarOverrides/${AppName}_${Environment}.properties -o ${AppName}_${BUILD_NUMBER}.bar -r'''
+/opt/IBM/ace-12/server/bin/mqsiapplybaroverride -b ${AppName}.bar -p ${AppName}/BarOverrides/${AppName}_${Environment}.properties -o ${AppName}_${BUILD_NUMBER}.bar -r'''
 }
 stage ('Application - Commit Bar File') {
 sh label: '', script: '''#!/bin/bash
