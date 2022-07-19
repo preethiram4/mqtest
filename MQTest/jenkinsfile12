@@ -1,0 +1,44 @@
+timestamps {
+
+node () {
+
+ wrap([$class: 'Xvfb']) {
+	stage ('Application - Checkout') {
+ 	 checkout([$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'jenkins-test1', url: 'https://github.com/preethiram4/mqtest.git']]]) 
+	}
+	stage ('Application - Build Process') {
+sh label: '', script: '''#!/bin/bash
+source /opt/IBM/ace-12/server/bin/mqsiprofile
+/opt/IBM/ace-12/tools/mqsicreatebar -data . -b ${AppName}.bar -a $AppName'''
+}
+stage ('Application - Apply Bar Override') {
+sh label: '', script: '''#!/bin/bash
+source /opt/IBM/ace-12/server/bin/mqsiprofile
+echo "Application Name " $AppName ${AppName}_${Environment}
+mqsiapplybaroverride -b ${AppName}.bar -p ${AppName}/BarOverrides/${AppName}_${Environment}.properties -o ${AppName}_${BUILD_NUMBER}.bar -r'''
+}
+stage ('Application - Commit Bar File') {
+sh label: '', script: '''#!/bin/bash
+echo "Application Name " $AppName ${AppName}_{$BUILD_NUMBER}
+zip ${AppName}_{$BUILD_NUMBER}.zip ${AppName}_${BUILD_NUMBER}.bar
+zip /home/zilker/appdata/bar/${AppName}_${BUILD_NUMBER}.zip ${AppName}_${BUILD_NUMBER}.bar
+chmod 777 /home/zilker/appdata/bar/${AppName}_${BUILD_NUMBER}.zip '''
+}
+stage('Update GIT') {
+    sh "git add ."
+    sh "git commit -am 'Bumped version number'"
+sh "gitPublisher branchesToPush: [[branchName: '*/main']], credentialsId: 'Jenkins-GitHub', url: 'https://github.com/preethiram4/mqtest.git'"
+            
+        
+      }
+    
+  
+
+    
+
+
+
+}
+cleanWs()
+}
+}
