@@ -26,7 +26,7 @@ chmod 777 /ACE_Builds/${AppName}_${BUILD_NUMBER}.zip '''
 }
 stage('Update GIT') {
     sh "git add ."
-    sh "git commit -am 'Bumped version number'"
+    sh "git commit -s -m 'Bumped version number'"
     echo "wait for build"
 
  sh "git push https://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@github.com/preethiram4/test.git HEAD:main"           
