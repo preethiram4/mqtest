@@ -25,11 +25,8 @@ zip /ACE_Builds/${AppName}_${BUILD_NUMBER}.zip ${AppName}_${BUILD_NUMBER}.bar
 chmod 777 /ACE_Builds/${AppName}_${BUILD_NUMBER}.zip '''
 }
 stage('Update GIT') {
-    sh "git add ."
-    sh "git commit -s -m 'Bumped version number'"
-    echo "wait for build"
-
- sh "git push https://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@github.com/preethiram4/mqtest.git/ HEAD:main"           
+  sh "/var/lib/jenkins/gitcommit.sh"
+        
         
       }
     
