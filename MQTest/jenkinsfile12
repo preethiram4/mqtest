@@ -25,7 +25,7 @@ zip /ACE_Builds/${AppName}_${BUILD_NUMBER}.zip ${AppName}_${BUILD_NUMBER}.bar
 chmod 777 /ACE_Builds/${AppName}_${BUILD_NUMBER}.zip '''
 }
 stage('Update GIT') {
-  sh "/var/lib/jenkins/gitcommit.sh"
+  sh "/ACE_Builds/gitcommit.sh"
         
         
       }
