@@ -27,7 +27,7 @@ chmod 777 /ACE_Builds/${AppName}_${BUILD_NUMBER}.zip '''
 stage('Update GIT') {
     sh "git add ."
     sh "git commit -am 'Bumped version number'"
-#sh "gitPublisher branchesToPush: [[branchName: '*/main']], credentialsId: 'Jenkins-GitHub', url: 'https://github.com/preethiram4/mqtest.git'"
+
  sh "git push https://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@github.com/preethiram4/mqtest.git/"           
         
       }
