@@ -28,7 +28,7 @@ stage('Update GIT') {
     sh "git add ."
     sh "git commit -am 'Bumped version number'"
 
- sh "git push https://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@github.com/preethiram4/mqtest.git/" HEAD:main           
+ sh "git push https://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@github.com/preethiram4/mqtest.git/ HEAD:main"           
         
       }
     
