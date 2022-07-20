@@ -4,7 +4,7 @@ node () {
 
  wrap([$class: 'Xvfb']) {
 	stage ('Application - Checkout') {
- 	 checkout([$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'Jenkins-Github', url: 'https://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@github.com/preethiram4/mqtest.git']]]) 
+ 	 checkout([$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'Jenkins-Github', url: 'https://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@github.com/preethiram4/mqtest.git']]]) 
 	}
 	stage ('Application - Build Process') {
 sh label: '', script: '''#!/bin/bash
@@ -29,7 +29,7 @@ stage('Update GIT') {
     sh "git commit -s -m 'Bumped version number'"
     echo "wait for build"
 
- sh "git push https://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@github.com/preethiram4/test.git HEAD:main"           
+ sh "git push https://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@github.com/preethiram4/mqtest.git/ HEAD:main"           
         
       }
     
