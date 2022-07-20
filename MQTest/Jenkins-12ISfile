@@ -1,0 +1,69 @@
+timestamps {
+
+node () {
+
+ wrap([$class: 'Xvfb']) {
+	stage ('Application - Checkout') {
+ 	 checkout([$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'jenkins', url: 'https://github.com/preethiram4/mqtest.git']]]) 
+	}
+	stage ('OC Login') {
+sh label: '', script: '''#!/bin/bash
+source /opt/IBM/ace-12/server/bin/mqsiprofile
+oc login --token=${OCP_APIToken} --server=https://api.cicd.aws.ztech.spatnam.in:6443 --insecure-skip-tls-verify
+#cloudctl login -a ${ICP_CONSOLE_URL} -n ${Namespace} -u ${CP4I_User} -p ${CP4I_Password} –-skip-ssl-validation
+oc project cp4i-ace-dsh-01 '''
+}
+stage ('Create - Integration Server YAML') {
+sh label: '', script: '''#!/bin/bash
+rm /ACE_Builds/IS.yaml
+cat <<EOT >> /ACE_Builds/IS.yaml
+apiVersion: appconnect.ibm.com/v1beta1
+kind: IntegrationServer
+metadata:
+  name: ${IntegrationserverName}
+  namespace: cp4i-ace-dsh-01
+spec:
+  adminServerSecure: true
+  createDashboardUsers: true
+  designerFlowsOperationMode: disabled
+  enableMetrics: true
+  license:
+    accept: true
+    license: L-APEH-C9NCK6
+    use: CloudPakForIntegrationNonProduction
+  pod:
+    containers:
+      runtime:
+        resources:
+          limits:
+            cpu: 300m
+            memory: 368Mi
+          requests:
+            cpu: 300m
+            memory: 368Mi
+  replicas: 1
+  router:
+    timeout: 120s
+  service:
+    endpointType: http
+  version: '12.0'
+  barURL:  ${BarURL}
+  configurations:
+    - git-barauth
+EOT
+chmod 777 /ACE_Builds/IS.yaml '''
+}
+stage ('Create Server') {
+sh label: '', script: '''#!/bin/bash
+if [ ${ISStatus} = 'NEW' ]
+then
+oc apply -f /ACE_Builds/IS.yaml 
+else
+oc replace -f /ACE_Builds/IS.yaml
+fi'''
+}
+
+}
+cleanWs()
+}
+}
