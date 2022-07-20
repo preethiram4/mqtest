@@ -21,8 +21,8 @@ stage ('Application - Commit Bar File') {
 sh label: '', script: '''#!/bin/bash
 echo "Application Name " $AppName ${AppName}_{$BUILD_NUMBER}
 zip ${AppName}_{$BUILD_NUMBER}.zip ${AppName}_${BUILD_NUMBER}.bar
-zip /home/ec2-user/appdata/bar/${AppName}_${BUILD_NUMBER}.zip ${AppName}_${BUILD_NUMBER}.bar
-chmod 777 /home/ec2-user/appdata/bar/${AppName}_${BUILD_NUMBER}.zip '''
+zip /ACE_Builds/${AppName}_${BUILD_NUMBER}.zip ${AppName}_${BUILD_NUMBER}.bar
+chmod 777 /ACE_Builds/${AppName}_${BUILD_NUMBER}.zip '''
 }
 stage('Update GIT') {
     sh "git add ."
